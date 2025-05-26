@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Profile</title></head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<h2>Welcome, <span th:text="${username}"></span></h2>
+<p>Role: <span th:text="${session.role}"></span></p>
+</body>
+</html>

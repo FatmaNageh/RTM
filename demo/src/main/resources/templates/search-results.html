@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Search Results</title>
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<h1>Search Results</h1>
+
+<form th:action="@{/users/search}" method="get">
+    Search Name: <input type="text" name="name" th:value="${searchTerm}">
+    <button type="submit">Search</button>
+</form>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>DOB</th>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}">1</td>
+        <td th:text="${user.username}">Username</td>
+        <td th:text="${user.dob}">1990-01-01</td>
+    </tr>
+</table>
+</body>
+</html>
