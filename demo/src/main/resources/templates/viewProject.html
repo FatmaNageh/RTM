@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>View Project</title>
+    <style>
+      
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          color: #fff;
+          margin-top: 1rem;
+        }
+        th, td {
+          padding: 0.5rem;
+          border-bottom: 1px solid rgba(255,255,255,0.1);
+          text-align: left;
+        }
+        th {
+          border-bottom: 2px solid #61dafb;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="hero">
+    <h1 th:text="${project.name}">Project Name</h1>
+    <p th:text="${project.description}">Project description goes here.</p>
+    
+    <a th:href="@{/project/{id}/addTask(id=${project.id})}" class="get-started">Add Task to Project</a>
+    <a th:href="@{/}" class="get-started" style="margin-left:1rem;">Back to Projects</a>
+    
+    <h2 style="margin-top: 2rem;">Tasks</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Priority</th>
+                <th>Assigned To</th>
+                <th>Due Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="task : ${tasks}">
+                <td th:text="${task.name}"></td>
+                <td th:text="${task.status}"></td>
+                <td th:text="${task.priority}"></td>
+                <td th:text="${task.assignedTo}"></td>
+                <td th:text="${#dates.format(task.dueDate, 'yyyy-MM-dd HH:mm')}"></td>
+                <td>
+                    <a th:href="@{/viewTask/{id}(id=${task.id})}" class="get-started" style="padding: 0.2rem 0.6rem;">View</a>
+                    <a th:href="@{/editTask/{id}(id=${task.id})}" class="get-started" style="padding: 0.2rem 0.6rem; margin-left:0.3rem;">Edit</a>
+                    <a th:href="@{/deleteTask/{id}(id=${task.id})}" class="get-started" style="padding: 0.2rem 0.6rem; margin-left:0.3rem; background:#ff6b6b; color:#fff;"
+                       onclick="return confirm('Are you sure you want to delete this task?');">Delete</a>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(tasks)}">
+                <td colspan="6" style="padding: 1rem; text-align:center; color:#a8dadc;">No tasks found.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

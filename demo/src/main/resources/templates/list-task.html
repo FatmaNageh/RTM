@@ -1,0 +1,168 @@
+<!-- <html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>List Task</title>
+    <link rel="stylesheet" href="/demo/src/main/resources/static/style.css">
+</head>
+<body>
+    <h2>List of Tasks</h2>
+    <div th:if="${project != null}">
+        <h3>Project: <span th:text="${project.name}"></span></h3>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Project</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="task: ${tasks}">
+                <td th:text="${task.id}"/>
+                <td th:text="${task.name}"/>
+                <td th:text="${task.project.name}"/>
+            </tr>
+        </tbody>
+    </table>
+    <br><br>
+    <a href="/">Go to Home</a>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>List Tasks</title>
+    <style>
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+        body {
+          font-family: 'Segoe UI', sans-serif;
+          background: #0b1f44;
+          color: #ffffff;
+        }
+        .navbar {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 1rem 2rem;
+          background: #0a192f;
+          box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .navbar .logo {
+          font-size: 1.5rem;
+          font-weight: bold;
+          color: #61dafb;
+        }
+        .navbar nav a {
+          margin: 0 1rem;
+          color: #cfd8dc;
+          text-decoration: none;
+          transition: color 0.3s;
+        }
+        .navbar nav a:hover {
+          color: #61dafb;
+        }
+        .hero {
+          text-align: center;
+          padding: 3rem 2rem 1rem;
+        }
+        h2 {
+          text-align: center;
+          font-size: 2rem;
+          margin-bottom: 1rem;
+        }
+        h3 {
+          text-align: center;
+          margin-bottom: 2rem;
+          color: #a8dadc;
+        }
+        table {
+          margin: auto;
+          border-collapse: collapse;
+          width: 80%;
+          background: #1e3a5f;
+          border-radius: 12px;
+          overflow: hidden;
+        }
+        th, td {
+          padding: 1rem;
+          text-align: left;
+          border-bottom: 1px solid #27496d;
+        }
+        th {
+          background: #0a192f;
+          color: #61dafb;
+        }
+        td {
+          color: #cfd8dc;
+        }
+        .get-started {
+          padding: 0.5rem 1rem;
+          background: #ffd60a;
+          border: none;
+          border-radius: 8px;
+          color: #000;
+          cursor: pointer;
+          font-weight: bold;
+          transition: background 0.3s;
+          margin: 2rem auto 0;
+          display: block;
+          width: fit-content;
+          text-decoration: none;
+        }
+        .get-started:hover {
+          box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+          background: linear-gradient(135deg, #6366F1, #ffd60a);
+        }
+    </style>
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="hero">
+    <h1>All Tasks</h1>
+    
+    <table style="margin-top: 2rem;">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Project</th>
+                <th>Status</th>
+                <th>Priority</th>
+                <th>Assigned To</th>
+                <th>Due Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="task : ${tasks}">
+                <td th:text="${task.name}"></td>
+                <td th:text="${task.projectId}"></td> <!-- You might want to replace with project name -->
+                <td th:text="${task.status}"></td>
+                <td th:text="${task.priority}"></td>
+                <td th:text="${task.assignedTo}"></td>
+                <td th:text="${task.project.name}"></td>
+
+                <td th:text="${#dates.format(task.dueDate, 'yyyy-MM-dd HH:mm')}"></td>
+                <td>
+                    <a th:href="@{/viewTask/{id}(id=${task.id})}" class="get-started" style="padding: 0.2rem 0.6rem;">View</a>
+                    <a th:href="@{/editTask/{id}(id=${task.id})}" class="get-started" style="padding: 0.2rem 0.6rem; margin-left:0.3rem;">Edit</a>
+                    <a th:href="@{/deleteTask/{id}(id=${task.id})}" class="get-started" style="padding: 0.2rem 0.6rem; margin-left:0.3rem; background:#ff6b6b; color:#fff;"
+                       onclick="return confirm('Are you sure you want to delete this task?');">Delete</a>
+                </td>
+
+
+            </tr>
+            <tr th:if="${#lists.isEmpty(tasks)}">
+                <td colspan="7" style="padding: 1rem; text-align:center; color:#a8dadc;">No tasks found.</td>
+            </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/addTask}" class="get-started">Add New Task</a>
+</div>
+</body>
+</html>

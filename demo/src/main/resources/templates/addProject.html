@@ -1,0 +1,226 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <style>
+    /* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 20px;
+    background-color: #f8f9fa;
+}
+h1 {
+    color: #333;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+th {
+    background-color: #007bff;
+    color: white;
+}
+button, a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 15px;
+    text-decoration: none;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+button:hover, a:hover {
+    background-color: #218838;
+}
+
+  </style>
+    <title>Add Project</title>
+    <style>
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+        body {
+          font-family: 'Segoe UI', sans-serif;
+          background:#0b1f44;
+          color: #ffffff;
+        }
+        .navbar {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 1rem 2rem;
+          background: #0a192f;
+          box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .navbar .logo {
+          font-size: 1.5rem;
+          font-weight: bold;
+          color: #61dafb;
+        }
+        .navbar nav a {
+          margin: 0 1rem;
+          color: #cfd8dc;
+          text-decoration: none;
+          transition: color 0.3s;
+        }
+        .navbar nav a:hover {
+          color: #61dafb;
+        }
+        .hero {
+          text-align: center;
+          padding: 4rem 2rem;
+          max-width: 800px;
+          margin: 0 auto;
+        }
+        .hero h1 {
+          font-size: 3rem;
+          margin-bottom: 1rem;
+        }
+        .hero p {
+          font-size: 1.25rem;
+          margin-bottom: 2rem;
+          color: #a8dadc;
+        }
+        .form-container {
+          background: rgba(255, 255, 255, 0.1);
+          backdrop-filter: blur(10px);
+          border-radius: 15px;
+          padding: 2rem;
+          margin: 2rem auto;
+          max-width: 600px;
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .form-group {
+          margin-bottom: 1.5rem;
+          text-align: left;
+        }
+        .form-group label {
+          display: block;
+          margin-bottom: 0.5rem;
+          font-weight: 600;
+          color: #61dafb;
+        }
+        input[type="text"], 
+        input[type="datetime-local"],
+        textarea,
+        select {
+          padding: 0.75rem;
+          width: 100%;
+          border-radius: 8px;
+          border: 2px solid rgba(97, 218, 251, 0.3);
+          outline: none;
+          background: rgba(255, 255, 255, 0.1);
+          color: #ffffff;
+          font-size: 1rem;
+          transition: border-color 0.3s ease;
+        }
+        input[type="text"]:focus,
+        input[type="datetime-local"]:focus,
+        textarea:focus,
+        select:focus {
+          border-color: #61dafb;
+          box-shadow: 0 0 0 3px rgba(97, 218, 251, 0.1);
+        }
+        textarea {
+          resize: vertical;
+          min-height: 100px;
+        }
+        select {
+          cursor: pointer;
+        }
+        select option {
+          background: #0a192f;
+          color: #ffffff;
+        }
+        .form-row {
+          display: flex;
+          gap: 1rem;
+        }
+        .form-row .form-group {
+          flex: 1;
+        }
+        .log-in {
+          background: linear-gradient(135deg, #ffd60a, #ffd60a);
+          color: black;
+          padding: 0.8rem 2.5rem;
+          font-size: 1.1rem;
+          font-weight: 600;
+          border: none;
+          border-radius: 12px;
+          box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+          cursor: pointer;
+          transition: all 0.3s ease;
+          margin: 1.5rem 0.5rem;
+        }
+        .log-in:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+          background: linear-gradient(135deg, #6366F1, #ffd60a);
+        }
+        .get-started {
+          padding: 0.8rem 2rem;
+          background: transparent;
+          border: 2px solid #61dafb;
+          border-radius: 8px;
+          color: #61dafb;
+          cursor: pointer;
+          font-weight: bold;
+          transition: all 0.3s ease;
+          margin: 0.5rem;
+          text-decoration: none;
+          display: inline-block;
+        }
+        .get-started:hover {
+          background: #61dafb;
+          color: #0b1f44;
+          transform: translateY(-2px);
+        }
+        .button-group {
+          margin-top: 2rem;
+          text-align: center;
+        }
+        .required {
+          color: #ff6b6b;
+        }
+    </style>
+</head>
+<body>
+<!-- <div th:replace="fragments/navbar :: navbar"></div> -->
+
+<div class="hero">
+    <h1>Add Project</h1>
+    
+    <div class="form-container">
+        <form th:action="@{/addProject}" th:object="${project}" method="POST">
+            <div class="form-group">
+                <label for="name">Project Name <span class="required">*</span></label>
+                <input type="text" th:field="*{name}" id="name" placeholder="Enter project name" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea th:field="*{description}" id="description" placeholder="Enter project description (optional)" rows="4"></textarea>
+            </div>
+            <button class="log-in" type="submit">Create Project</button>
+<a th:href="@{/addTask}" class="get-started">Add Task</a>
+
+        </form>
+    </div>
+    
+    <br>
+    <a th:href="@{/}" class="get-started">Go to Projects</a>
+    
+    
+    
+</div>
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!-- templates/fragments/navbar.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="navbar">
+    <nav>
+        <ul>
+            <!-- 🌐 GUEST NAVBAR -->
+            <li th:if="${session.username == null}"><a th:href="@{/}">Home</a></li>
+            <li th:if="${session.username == null}"><a th:href="@{/about}">About</a></li>
+            <li th:if="${session.username == null}"><a th:href="@{/features}">Features</a></li>
+            <li th:if="${session.username == null}"><a th:href="@{/contact}">Contact</a></li>
+            <li th:if="${session.username == null}"><a th:href="@{/users/Login}">Login</a></li>
+            <li th:if="${session.username == null}"><a th:href="@{/users/Registeration}">Register</a></li>
+
+            <!-- 🛠️ ADMIN NAVBAR -->
+            <li th:if="${session.role == 'ADMIN'}"><a th:href="@{/dashboard}">Dashboard</a></li>
+            <li th:if="${session.role == 'ADMIN'}"><a th:href="@{/users}">Manage Users</a></li>
+            <li th:if="${session.role == 'ADMIN'}"><a th:href="@{/reports}">Reports</a></li>
+            <li th:if="${session.role == 'ADMIN'}"><a th:href="@{/settings}">System Settings</a></li>
+            <li th:if="${session.role == 'ADMIN'}"><a th:href="@{/notifications}">Notifications</a></li>
+
+            <!-- 📋 MANAGER NAVBAR -->
+            <li th:if="${session.role == 'MANAGER'}"><a th:href="@{/dashboard}">Dashboard</a></li>
+            <li th:if="${session.role == 'MANAGER'}"><a th:href="@{/projects}">Manage Projects</a></li>
+            <li th:if="${session.role == 'MANAGER'}"><a th:href="@{/resources}">Manage Resources</a></li>
+            <li th:if="${session.role == 'MANAGER'}"><a th:href="@{/team}">My Team</a></li>
+            <li th:if="${session.role == 'MANAGER'}"><a th:href="@{/assign-tasks}">Assign Tasks</a></li>
+            <li th:if="${session.role == 'MANAGER'}"><a th:href="@{/project-overview}">Project Overview</a></li>
+            <li th:if="${session.role == 'MANAGER'}"><a th:href="@{/resource-allocation}">Resource Allocation</a></li>
+            <li th:if="${session.role == 'MANAGER'}"><a th:href="@{/reports}">Reports</a></li>
+            <li th:if="${session.role == 'MANAGER'}"><a th:href="@{/notifications}">Notifications</a></li>
+
+            <!-- 👷 EMPLOYEE NAVBAR -->
+            <li th:if="${session.role == 'EMPLOYEE'}"><a th:href="@{/dashboard}">Dashboard</a></li>
+            <li th:if="${session.role == 'EMPLOYEE'}"><a th:href="@{/my-tasks}">My Tasks</a></li>
+            <li th:if="${session.role == 'EMPLOYEE'}"><a th:href="@{/timesheet}">Timesheet</a></li>
+            <li th:if="${session.role == 'EMPLOYEE'}"><a th:href="@{/leave-requests}">Leave Requests</a></li>
+            <li th:if="${session.role == 'EMPLOYEE'}"><a th:href="@{/project-details}">Project Details</a></li>
+            <li th:if="${session.role == 'EMPLOYEE'}"><a th:href="@{/notifications}">Notifications</a></li>
+
+            <!-- Logout for all logged-in users -->
+            <li th:if="${session.username != null}"><a th:href="@{/users/logout}">Logout</a></li>
+        </ul>
+    </nav>
+</div>
+</body>
+</html>
