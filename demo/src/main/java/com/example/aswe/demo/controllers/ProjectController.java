@@ -7,7 +7,6 @@ import com.example.aswe.demo.repositories.TaskRepository;
 import com.example.aswe.demo.repositories.UserRepository;
 
 import java.util.List;
-import java.util.Optional; // Import Optional
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -45,11 +44,10 @@ public class ProjectController {
     @PostMapping("addProject")
     public String saveProject(@ModelAttribute Project project) {
         this.projectRepository.save(project);
-        return "Added"; // Consider redirecting to the project list or the new project's detail page
+        return "Added";
     }
 
-    // --- Modified addTask GET method ---
-    @GetMapping("addTask/{projectId}") // Added projectId to the path
+    @GetMapping("addTask/{projectId}")
     public ModelAndView addTask() {
         ModelAndView mav = new ModelAndView("addTask.html");
         List<Project> allProjects = this.projectRepository.findAll();
@@ -61,36 +59,30 @@ public class ProjectController {
         return mav;
     }
 
-    // --- Modified addTask POST method ---
     @PostMapping("addTask")
     public String saveTask(@ModelAttribute Task task) {
 
         this.taskRepository.save(task);
-        return "Task Added to Project "; // Consider redirecting to the project's task list
-
+        return "Task Added to Project ";
     }
 
     @GetMapping("/project/{id}")
     public ModelAndView getProject(@PathVariable("id") int id) {
         ModelAndView mav = new ModelAndView("list-task.html");
-        // It's good practice to ensure the project exists before fetching its tasks
         Optional<Project> project = projectRepository.findById(id);
         if (project.isPresent()) {
-            List<Task> tasks = this.taskRepository.findByProjectId(id); // Assuming you have this method in
-                                                                        // TaskRepository
-            mav.addObject("project", project.get()); // Add the project object to the model
+            List<Task> tasks = this.taskRepository.findByProjectId(id);
+
+            mav.addObject("project", project.get());
             mav.addObject("tasks", tasks);
         } else {
-            // Handle case where project is not found, e.g., redirect to project list or
-            // show error
-            mav.setViewName("error-page"); // You'd need an error-page.html
+
+            mav.setViewName("error-page");
             mav.addObject("message", "Project not found!");
         }
         return mav;
     }
 
-    // Add methods for updating and deleting projects and tasks
-    // For example, to update a project:
     @GetMapping("/editProject/{id}")
     public ModelAndView editProject(@PathVariable("id") int id) {
         ModelAndView mav = new ModelAndView("editProject.html");
@@ -101,7 +93,7 @@ public class ProjectController {
 
     @PostMapping("/editProject")
     public String updateProject(@ModelAttribute Project project) {
-        this.projectRepository.save(project); // save will update if ID exists
+        this.projectRepository.save(project);
         return "Project Updated";
     }
 
@@ -111,13 +103,12 @@ public class ProjectController {
         return "Project Deleted";
     }
 
-    // Similar methods for tasks (editTask, deleteTask)
     @GetMapping("/editTask/{id}")
     public ModelAndView editTask(@PathVariable("id") int id) {
         ModelAndView mav = new ModelAndView("editTask.html");
         Optional<Task> task = taskRepository.findById(id);
         task.ifPresent(t -> mav.addObject("task", t));
-        mav.addObject("allProjects", projectRepository.findAll()); // Needed for selecting a new project
+        mav.addObject("allProjects", projectRepository.findAll());
         return mav;
     }
 
