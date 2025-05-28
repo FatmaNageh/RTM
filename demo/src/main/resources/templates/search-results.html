@@ -1,29 +1,35 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Search Results</title>
-</head>
+<head><title>Search Results</title></head>
 <body>
-<div th:replace="fragments/navbar :: navbar"></div>
 
-<h1>Search Results</h1>
+<h2>Search Users</h2>
 
 <form th:action="@{/users/search}" method="get">
-    Search Name: <input type="text" name="name" th:value="${searchTerm}">
+    <label>Search Name:</label>
+    <input type="text" name="name" th:value="${searchTerm}">
     <button type="submit">Search</button>
 </form>
 
+<br>
+
 <table border="1">
-    <tr>
-        <th>ID</th>
-        <th>Username</th>
-        <th>DOB</th>
-    </tr>
-    <tr th:each="user : ${users}">
-        <td th:text="${user.id}">1</td>
-        <td th:text="${user.username}">Username</td>
-        <td th:text="${user.dob}">1990-01-01</td>
-    </tr>
+    <thead>
+        <tr>
+            <th>ID</th><th>Username</th><th>DOB</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.username}"></td>
+            <td th:text="${user.dob}"></td>
+        </tr>
+    </tbody>
 </table>
+
+<br>
+<a th:href="@{/users}">Back to User List</a>
+
 </body>
 </html>
